@@ -340,8 +340,9 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('error', '경고 띄우기   ', {
+addBlock('error', '오류 발생시키기     ', {
     color: '#ff0000',
+    outerLine: '#cc0000',
 }, {
     params: [
         {
@@ -357,11 +358,31 @@ addBlock('error', '경고 띄우기   ', {
      break;
 })
 
+addBlock('color', '색상을 %1으로 바꾸기     ', {
+    color: '#0080ff',
+    outerLine: '#0066cc',
+}, {
+    params: [
+        {
+            type: 'Block',
+            accept: 'string'
+        },
+        {
+            type: 'Indicator',
+            color: '#CCE5FF',
+            size: 11,
+        }
+    ],
+}, 'text', (sprite, script) => {
+     item__a65d5.color()
+})
+
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
         'error',
+        'color',
     ]
 });
 
@@ -371,7 +392,7 @@ updateCategory('API')
 $('head').append(`
 <style>
 #entryCategoryAPI {
-    background-image: url(/lib/entry-js/images/expansion.svg);
+    background-image: url(/lib/entry-js/images/hardware.svg);
     background-repeat: no-repeat;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
@@ -386,4 +407,4 @@ $('head').append(`
 </style>
 `)
 
-$('#entryCategoryAPI').append('추가')
+$('#entryCategoryAPI').append('특수')
