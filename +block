@@ -340,69 +340,28 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop', '작품 정지시키기', {
-    color: '#000000' ,
-    outerLine: '#606060'
+addBlock('error', '경고 띄우기   ', {
+    color: '#ff0000',
 }, {
     params: [
         {
             type: 'Block',
             accept: 'string'
         },
-            fontSize: 11,
-            arrowColor: '#000000',
-            value: 'success'
-        },
-        {
-            type: 'Dropdown',
-            options: [
-                ['유지되게', 'true'],
-                ['잠시 뒤 사라지게', 'false']
-            ],
-            fontSize: 11,
-            arrowColor: '#000000',
-            value: 'true'
-        },
         {
             type: 'Indicator',
             size: 11,
         }
     ],
-    def: [
-        {
-            type: 'text',
-            params: [`알림`]
-        },
-        {
-            type: 'text',
-            params: [`엔트리`]
-        },
-        null,
-        null,
-        null
-    ],
-    map: {
-        TITLE: 0,
-        CONTENT: 1,
-        TYPE: 2,
-        HIDE: 3
-    }
 }, 'text', (sprite, script) => {
-    let hide
-    if (script.getValue('HIDE', script) == 'true') {
-        hide = true
-    } else {
-        hide = false
-    }
-    eval(`Entry.toast.${script.getValue('TYPE', script)}('${script.getValue('TITLE', script)}', '${script.getValue('CONTENT', script)}', ${hide})`)
-    return script.callReturn()
+     break;
 })
 
-
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
-        'stop',
+        'error',
     ]
 });
 
@@ -412,12 +371,14 @@ updateCategory('API')
 $('head').append(`
 <style>
 #entryCategoryAPI {
+    background-image: url(/lib/entry-js/images/expansion.svg);
     background-repeat: no-repeat;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     margin-bottom: 1px;
 }
 .entrySelectedCategory#entryCategoryAPI {
+    background-image: url(/lib/entry-js/images/expansion_on.svg);
     background-color: #000000;
     border-color: #000000;
     color: #fff;
