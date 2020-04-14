@@ -341,8 +341,8 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('error', '오류 발생시키기     ', {
-    color: '#ff0000',
-    outerLine: '#cc0000',
+    color: '#000000',
+    outerLine: '#000000',
 }, {
     params: [
         {
@@ -358,31 +358,29 @@ addBlock('error', '오류 발생시키기     ', {
      break;
 })
 
-addBlock('color', '색상을 %1으로 바꾸기     ', {
-    color: '#0080ff',
-    outerLine: '#0066cc',
+addBlock('day', '요일', {
+    color: '#000000',
+    outerLine: '#000000',
 }, {
-    params: [
-        {
-            type: 'Block',
-            accept: 'string'
-        },
-        {
-            type: 'Indicator',
-            color: '#CCE5FF',
-            size: 11,
-        }
-    ],
+    params: [],
+    def: [],
+    map: {}
 }, 'text', (sprite, script) => {
-     item__a65d5.color()
-})
-
+     let week = new Array('일', '월', '화', '수', '목', '금', '토');
+     let today = new Date();
+     let year = today.getFullYear();
+     let month = today.getMonth() + 1;
+     let day = today.getDate();
+     let dayName = week[today.getDay()];
+     return dayName;
+}, 'basic_string_field');
+          
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
         'error',
-        'color',
+        'day',
     ]
 });
 
@@ -399,7 +397,7 @@ $('head').append(`
     margin-bottom: 1px;
 }
 .entrySelectedCategory#entryCategoryAPI {
-    background-image: url(/lib/entry-js/images/expansion_on.svg);
+    background-image: url(/lib/entry-js/images/hardware_on.svg);
     background-color: #000000;
     border-color: #000000;
     color: #fff;
