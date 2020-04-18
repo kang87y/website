@@ -388,11 +388,9 @@ addBlock('mouse_right_clicked', '마우스 좌/우/휠클릭     ', {
     map: {}
 }, 'text', (sprite, script) => {
      document.addEventListener('contextmenu', function() {
-       event.preventDefault();
+         event.preventDefault();
      });
-     document.onmousedown = function () {
-       return MouseEvent.button;
-     };
+     return MouseEvent.button;
 }, 'basic_string_field')
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
