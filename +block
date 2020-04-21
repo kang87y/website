@@ -387,7 +387,29 @@ addBlock('mouse_which_clicked', '마우스 좌/우/휠클릭     ', {
     def: [],
     map: {}
 }, 'text', (sprite, script) => {
-     return event.button;
+     
+let button = document.querySelector('#button');
+let log = document.querySelector('#log');
+button.addEventListener('mouseup', logMouseButton);
+
+function logMouseButton(e) {
+  if (typeof e === 'object') {
+    switch (e.button) {
+      case 0:
+        return '좌';
+        break;
+      case 1:
+        return '휠';
+        break;
+      case 2:
+        return '우';
+        break;
+      default:
+        return `Unknown button code: ${e.button}`;
+    }
+  }
+}      return '우';
+     }
 }, 'basic_string_field')
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
