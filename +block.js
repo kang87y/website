@@ -366,9 +366,6 @@ addBlock('day', '요일', {
 }, 'text', (sprite, script) => {
      let week = new Array('일', '월', '화', '수', '목', '금', '토');
      let today = new Date();
-     let year = today.getFullYear();
-     let month = today.getMonth() + 1;
-     let day = today.getDate();
      let dayName = week[today.getDay()];
      return dayName;
 }, 'basic_string_field');
