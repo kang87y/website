@@ -342,7 +342,7 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 addBlock('error', '오류 발생시키기     ', {
     color: '#000000',
-    outerLine: '#000000',
+    outerLine-color: '#000000',
 }, {
     params: [
         {
@@ -362,7 +362,7 @@ addBlock('error', '오류 발생시키기     ', {
 
 addBlock('day', '요일', {
     color: '#000000',
-    outerLine: '#000000',
+    outerLine-color: '#000000',
 }, {
     params: [],
     def: [],
@@ -381,7 +381,7 @@ addBlock('day', '요일', {
 
 addBlock('mouse_which_clicked', '마우스 좌/우/휠클릭     ', {
     color: '#000000',
-    outerLine: '#000000',
+    outerLine-color: '#000000',
 }, {
     params: [],
     def: [],
