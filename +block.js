@@ -321,8 +321,8 @@ const updateCategory = (category, options) => {
 }
 const addBlock = (blockname, template, color, params, _class, func, skeleton = 'basic') => {
     Entry.block[blockname] = {
-        color: color.color,
-        outerLine: color.outerline,
+        color: '#4c0099',
+        outerLine: '#330066',
         skeleton: skeleton,
         statement: [],
         params: params.params,
@@ -334,15 +334,13 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
         paramsKeyMap: params.map,
         class: _class ? _class : 'default',
         func: func,
-        template: template
+        template: template,
     }
 }
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('error', '오류 발생시키기     ', {
-    color: '#000000',
-    outerLine: '#000000',
 }, {
     params: [
         {
@@ -361,8 +359,6 @@ addBlock('error', '오류 발생시키기     ', {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('day', '요일', {
-    color: '#000000',
-    outerLine: '#000000',
 }, {
     params: [],
     def: [],
@@ -380,8 +376,6 @@ addBlock('day', '요일', {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('mouse_which_clicked', '마우스 좌/우/휠클릭     ', {
-    color: '#ffffff',
-    outerLine: '#000000',
 }, {
     params: [],
     def: [],
@@ -414,11 +408,22 @@ logMouseButton;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+addBlock('boost_mode', '부스트모드     ', {
+}, {
+    params: [],
+    def: [],
+    map: {}
+}, 'text', (sprite, script) => {
+        return Entry.glModeName;
+}, 'basic_string_field')
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
 Entry.staticBlocks.push({
     category: 'API', blocks: [
         'error',
         'day',
-        'mouse_which_clicked',
     ]
 });
 
@@ -428,16 +433,18 @@ updateCategory('API')
 $('head').append(`
 <style>
 #entryCategoryAPI {
-    background-image: url(/lib/entry-js/images/hardware.svg);
+    background-image: url(https://media.discordapp.net/attachments/629297490214256650/702376411670773760/26d58a757b92fe4b.png);
+    background-image-size: 5px
     background-repeat: no-repeat;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     margin-bottom: 1px;
 }
 .entrySelectedCategory#entryCategoryAPI {
-    background-image: url(/lib/entry-js/images/hardware_on.svg);
-    background-color: #000000;
-    border-color: #000000;
+    background-image: url(https://media.discordapp.net/attachments/629297490214256650/702377451271094292/2.png);
+    background-image-size: 5px
+    background-color: #4c0099;
+    border-color: #330066;
     color: #fff;
 }
 </style>
