@@ -340,7 +340,7 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('error', '오류 발생시키기     ', {
+addBlock('stop_project', '작품 정지시키기     ', {
 }, {
     params: [
         {
@@ -353,7 +353,7 @@ addBlock('error', '오류 발생시키기     ', {
         }
     ],
 }, 'text', (sprite, script) => {
-     break;
+     openProject();
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -405,22 +405,53 @@ logMouseButton;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('boost_mode', '부스트모드     ', {
+addBlock('boost_mode', '부스트모드%1     ', {
 }, {
-    params: [],
+    params: [
+    {
+                type: "Dropdown",
+                options: [
+                    [ "ON", "0" ],
+                    [ "OFF", "1" ]
+                ],
+            }
+    ],
     def: [],
+    paramsKeyMap: {
+            VALUE: 0
+    },
     map: {}
 }, 'text', (sprite, script) => {
-        return Entry.glModeName;
-}, 'basic_string_field')
+        const value = script.getNumberField("VALUE", script);
+            let result;
+            switch(value) {
+                case 0:
+                    if (useWebGL == true) {
+                        result = true;
+                    } else {
+                        result = false;
+                    }
+                    break;
+                case 1:
+                    if (useWebGL == 'true') {
+                        result = false;
+                    } else {
+                        result = true;
+                    }
+                    break;
+            }
+
+            return result;
+}, 'basic_boolean_field')
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
-        'error',
+        'stop_project',
         'day',
+        'boost_mode'
     ]
 });
 
