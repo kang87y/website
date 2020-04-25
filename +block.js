@@ -431,9 +431,9 @@ addBlock('box', '%1을 %2(으)로 띄우기   ', {
         {
             type: "Dropdown",
             options: [
-                ["alert(경고창)", "1"],
-                ["confirm(선택창)", "2"],
-                ["prompt(입력창)", "3"]
+                ['alert(경고창)', '1'],
+                ['confirm(선택창)', '2'],
+                ['prompt(입력창)', '3']
             ],
          fontSize: 11,
          value: '1'
@@ -442,18 +442,22 @@ addBlock('box', '%1을 %2(으)로 띄우기   ', {
     def: {
         params: [
                 {
-                    type: "text",
-                    params: [ "엔트리" ]
+                    type: 'text',
+                    params: [`엔트리`]
                 },
                 {
-                    type: "text",
-                    params: [ "alert(경고창)" ]
+                    type: 'text',
+                    params: [`alert(경고창)`]
                 },
         ],
     },
+    paramsKeyMap: {
+            LEFTHAND: 0,
+            RIGHTHAND: 1
+    },
 }, 'text', (sprite, script) => {
-    const leftValue = script.getNumberValue("LEFTHAND", script);
-    const rightValue = script.getNumberField("RIGHTHAND", script);
+    const leftValue = script.getNumberValue('LEFTHAND', script);
+    const rightValue = script.getNumberField('RIGHTHAND', script);
     
     if (rightValue == "alect(경고창)") {
         alert(leftValue);
