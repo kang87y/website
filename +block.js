@@ -353,7 +353,7 @@ addBlock('stop_project', '작품 정지시키기     ', {
         }
     ],
 }, 'text', (sprite, script) => {
-     openProject();
+     
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -372,7 +372,7 @@ addBlock('day', '요일', {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('mouse_which_clicked', '마우스 좌/우/휠클릭     ', {
+addBlock('which_mouse_clicked', '마우스 좌/우/휠클릭   ', {
 }, {
     params: [],
     def: [],
@@ -405,44 +405,66 @@ logMouseButton;
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('boost_mode', '부스트모드%1     ', {
+addBlock('boost_mode', '부스트모드가 켜져있는가?   ', {
 }, {
     params: [
-    {
-                type: "Dropdown",
-                options: [
-                    [ "ON", "0" ],
-                    [ "OFF", "1" ]
-                ],
-            }
     ],
     def: [],
-    paramsKeyMap: {
-            VALUE: 0
-    },
     map: {}
 }, 'text', (sprite, script) => {
-        const value = script.getNumberField("VALUE", script);
-            let result;
-            switch(value) {
-                case 0:
-                    if (useWebGL == true) {
-                        result = true;
-                    } else {
-                        result = false;
-                    }
-                    break;
-                case 1:
-                    if (useWebGL == 'true') {
-                        result = false;
-                    } else {
-                        result = true;
-                    }
-                    break;
-            }
-
-            return result;
+    if (useWebGL == true) {
+        return true;
+    } else {
+        return false;
+    }
 }, 'basic_boolean_field')
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('box', '%1을 %2(으)로 띄우기   ', {
+}, {
+    params: [
+        {
+            type: "Block",
+            accept: "string"
+        },
+        {
+            type: "Dropdown",
+            options: [
+                ["alert(경고창)", "1"],
+                ["confirm(선택창)", "2"],
+                ["prompt(입력창)", "3"]
+            ],
+         fontSize: 11,
+         value: '1'
+        }
+    ],
+    def: {
+        params: [
+                {
+                    type: "text",
+                    params: [ "엔트리" ]
+                },
+                {
+                    type: "text",
+                    params: [ "alert(경고창)" ]
+                },
+        ],
+    },
+}, 'text', (sprite, script) => {
+    const leftValue = script.getNumberValue("LEFTHAND", script);
+    const rightValue = script.getNumberField("RIGHTHAND", script);
+    
+    if (rightValue == "alect(경고창)") {
+        alert(leftValue);
+    } else if (rightValue == "confirm(선택창)") {
+        let choose = confirm(leftValue);
+        return choose;
+    } else if (rightValue == "prompt(입력창)") {
+        let enter = confirm(leftValue);
+        return enter;
+    }
+}, 'basic_string_field')
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -450,8 +472,10 @@ addBlock('boost_mode', '부스트모드%1     ', {
 Entry.staticBlocks.push({
     category: 'API', blocks: [
         'stop_project',
+        'boost_mode',
         'day',
-        'boost_mode'
+        'which_mouse_clicked',
+        'box'
     ]
 });
 
