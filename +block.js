@@ -435,8 +435,8 @@ addBlock('alect', '%1제목의 alect(경고창) 띄우기     ', {
     ],
     def: {
         params: {
-                type: "text",
-                params: ['엔트리']
+            type: "text",
+            params: ['엔트리']
         },
     },
 }, 'text', (sprite, script) => {
