@@ -421,7 +421,7 @@ addBlock('boost_mode', '부스트모드가 켜져있는가?   ', {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project_with_error', '%1제목의 alect(경고창) 띄우기     ', {
+addBlock('alect', '%1제목의 alect(경고창) 띄우기     ', {
 }, {
     params: [
         {
@@ -489,6 +489,7 @@ Entry.staticBlocks.push({
         'stop_project_with_error',
         'boost_mode',
         'day',
+        'alect',
         'box'
     ]
 });
