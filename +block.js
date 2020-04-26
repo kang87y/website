@@ -421,7 +421,26 @@ addBlock('boost_mode', '부스트모드가 켜져있는가?   ', {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('box', '%1(을)를 %2(으)로 띄우기   ', {
+addBlock('stop_project_with_error', '%1제목의 alect(경고창) 띄우기     ', {
+}, {
+    params: [
+        {
+            type: 'Block',
+            accept: 'string'
+        },
+        {
+            type: 'Indicator',
+            size: 11,
+        }
+    ],
+}, 'text', (sprite, script) => {
+    const value = script.getNumberValue("VALUE", script);
+    alect(value)
+})
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('box', '%1제목의 %2 띄우기   ', {
 }, {
     params: [
         {
@@ -431,9 +450,8 @@ addBlock('box', '%1(을)를 %2(으)로 띄우기   ', {
         {
             type: "Dropdown",
             options: [
-                ['alert(경고창)', '1'],
-                ['confirm(선택창)', '2'],
-                ['prompt(입력창)', '3']
+                ['confirm(선택창)', '1'],
+                ['prompt(입력창)', '2']
             ],
          fontSize: 11,
          value: 'alert(경고창)'
@@ -455,11 +473,9 @@ addBlock('box', '%1(을)를 %2(으)로 띄우기   ', {
     const rightValue = script.getField('RIGHTHAND', script);
     
     if (rightValue == '1') {
-        alert(leftValue);
-    } else if (rightValue == '2') {
         let choose = confirm(leftValue);
         return choose;
-    } else if (rightValue == '3') {
+    } else if (rightValue == '2') {
         let enter = prompt(leftValue);
         return enter;
     }
