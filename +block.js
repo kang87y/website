@@ -436,15 +436,15 @@ addBlock('alect', '%1제목의 alect(경고창) 띄우기     ', {
     def: [
         {
             type: "text",
-            params: ['엔트리']
+            params: [`엔트리`]
         },
     ],
     map: {
-            VALUE: 0
+        VALUE: 0
     },
 }, 'text', (sprite, script) => {
     const value = script.getValue('VALUE', script);
-    alect(value);
+    alert(value);
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -474,8 +474,8 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
                 null
     ],
     map: {
-            LEFTHAND: 0,
-            RIGHTHAND: 1
+         LEFTHAND: 0,
+         RIGHTHAND: 1
     },
 }, 'text', (sprite, script) => {
     const leftValue = script.getValue('LEFTHAND', script);
@@ -495,11 +495,11 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
-        'alect',
-        'box',
         'stop_project_with_error',
         'boost_mode',
-        'day'
+        'day',
+        'alect',
+        'box'
     ]
 });
 
