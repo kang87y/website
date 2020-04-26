@@ -433,6 +433,12 @@ addBlock('alect', '%1제목의 alect(경고창) 띄우기     ', {
             size: 11,
         }
     ],
+    def: [
+        {
+            type: 'text',
+            params: [`엔트리`]
+        },
+    ],
 }, 'text', (sprite, script) => {
     const value = script.getNumberValue("VALUE", script);
     alect(value)
