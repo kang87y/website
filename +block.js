@@ -463,7 +463,7 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
                 ['prompt(입력창)', '2']
             ],
          fontSize: 11,
-         value: 'alert(경고창)'
+         value: 'confirm(선택창)'
         },
     ],
     def: [
