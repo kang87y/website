@@ -340,7 +340,7 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project', '작품 정지시키기     ', {
+addBlock('stop_project_with_error', '작품 정지시키기     ', {
 }, {
     params: [
         {
@@ -353,7 +353,7 @@ addBlock('stop_project', '작품 정지시키기     ', {
         }
     ],
 }, 'text', (sprite, script) => {
-     
+     Entry.engine.toggleStop();
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -421,7 +421,7 @@ addBlock('boost_mode', '부스트모드가 켜져있는가?   ', {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('box', '%1을 %2(으)로 띄우기   ', {
+addBlock('box', '%1(을)를 %2(으)로 띄우기   ', {
 }, {
     params: [
         {
@@ -436,36 +436,31 @@ addBlock('box', '%1을 %2(으)로 띄우기   ', {
                 ['prompt(입력창)', '3']
             ],
          fontSize: 11,
-         value: '1'
-        }
+         value: 'alert(경고창)'
+        },
     ],
-    def: {
-        params: [
+    def: [
                 {
                     type: 'text',
                     params: [`엔트리`]
                 },
-                {
-                    type: 'text',
-                    params: [`alert(경고창)`]
-                },
-        ],
-    },
-    paramsKeyMap: {
+                null
+    ],
+    map: {
             LEFTHAND: 0,
             RIGHTHAND: 1
     },
 }, 'text', (sprite, script) => {
-    const leftValue = script.getNumberValue('LEFTHAND', script);
-    const rightValue = script.getNumberField('RIGHTHAND', script);
+    const leftValue = script.getValue('LEFTHAND', script);
+    const rightValue = script.getField('RIGHTHAND', script);
     
-    if (rightValue == "alect(경고창)") {
+    if (rightValue == '1') {
         alert(leftValue);
-    } else if (rightValue == "confirm(선택창)") {
+    } else if (rightValue == '2') {
         let choose = confirm(leftValue);
         return choose;
-    } else if (rightValue == "prompt(입력창)") {
-        let enter = confirm(leftValue);
+    } else if (rightValue == '3') {
+        let enter = prompt(leftValue);
         return enter;
     }
 }, 'basic_string_field')
@@ -475,10 +470,9 @@ addBlock('box', '%1을 %2(으)로 띄우기   ', {
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
-        'stop_project',
+        'stop_project_with_error',
         'boost_mode',
         'day',
-        'which_mouse_clicked',
         'box'
     ]
 });
