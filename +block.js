@@ -441,7 +441,7 @@ addBlock('alect', '%1제목의 alect(경고창) 띄우기     ', {
     ],
 }, 'text', (sprite, script) => {
     const value = script.getNumberValue("VALUE", script);
-    alect(value)
+    alect(value);
 })
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
