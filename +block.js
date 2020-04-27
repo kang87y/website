@@ -332,7 +332,7 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
             type: blockname
         },
         paramsKeyMap: params.map,
-        class: _class ? _class : 'default',
+        class: _class,
         func: func,
         template: template,
     }
