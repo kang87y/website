@@ -340,7 +340,7 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project_with_error', '작품 정지시키기     ', {
+addBlock('stop_project', '작품 정지시키기     ', {
 }, {
     params: [
         {
@@ -352,17 +352,74 @@ addBlock('stop_project_with_error', '작품 정지시키기     ', {
             size: 11,
         }
     ],
+    _class: 'stop_projects'
 }, 'text', (sprite, script) => {
      Entry.engine.toggleStop();
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('day', '요일', {
+addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
+}, {
+    params: [
+        {
+            type: 'Block',
+            accept: 'string'
+        },
+        {
+            type: 'Indicator',
+            size: 11,
+        }
+    ],
+    def: [
+        {
+            type: "number",
+            params: [`1`]
+        },
+    ],
+    _class: 'stop_projects',
+    map: {
+         VALUE: 0,
+    },
+}, 'text', (sprite, script) => {
+     const value = script.getNumberValue('VALUE', script);
+     let wait = value*1000
+     
+     Entry.engine.togglePause();
+    
+     setTimeout(function() {
+         Entry.engine.toggleRun();
+         console.log(value);
+     }, wait);
+})
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('stop_project3', '대형화면으로 만들기     ', {
+}, {
+    params: [
+        {
+            type: 'Block',
+            accept: 'string'
+        },
+        {
+            type: 'Indicator',
+            size: 11,
+        }
+    ],
+    _class: 'stop_projects'
+}, 'text', (sprite, script) => {
+     Entry.engine.toggleFullScreen();
+})
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('day', '오늘 요일', {
 }, {
     params: [],
     def: [],
-    map: {}
+    map: {},
+    _class: 'day'
 }, 'text', (sprite, script) => {
      let week = new Array('일', '월', '화', '수', '목', '금', '토');
      let today = new Date();
@@ -372,45 +429,13 @@ addBlock('day', '요일', {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('which_mouse_clicked', '마우스 좌/우/휠클릭   ', {
-}, {
-    params: [],
-    def: [],
-    map: {}
-}, 'text', (sprite, script) => {
-     
-    let button = document.querySelector('#button');
-    let log = document.querySelector('#log');
-    button.addEventListener('mouseup', logMouseButton);
-
-    function logMouseButton(e) {
-      if (typeof e === 'object') {
-        switch (e.button) {
-          case 0:
-            return '좌';
-            break;
-          case 1:
-            return '휠';
-            break;
-          case 2:
-            return '우';
-            break;
-          default:
-            return `Unknown button code: ${e.button}`;
-        }
-      }
-    }
-logMouseButton;
-}, 'basic_string_field')
-
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-addBlock('boost_mode', '부스트모드가 켜져있는가?   ', {
+addBlock('boost_mode', '부스트모드가 켜져있는가?  ', {
 }, {
     params: [
     ],
     def: [],
-    map: {}
+    map: {},
+    _class: 'boost_mode_check'
 }, 'text', (sprite, script) => {
     if (useWebGL == true) {
         return true;
@@ -439,6 +464,7 @@ addBlock('alert', '%1제목의 alert(경고창) 띄우기     ', {
             params: [`엔트리`]
         },
     ],
+    _class: 'box_',
     map: {
         VALUE: 0
     },
@@ -473,6 +499,7 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
                 },
                 null
     ],
+    _class: 'box_',
     map: {
          LEFTHAND: 0,
          RIGHTHAND: 1
@@ -495,7 +522,9 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
-        'stop_project_with_error',
+        'stop_project',
+        'stop_project2',
+        'stop_project3',
         'boost_mode',
         'day',
         'alert',
