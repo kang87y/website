@@ -389,7 +389,6 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
     
      setTimeout(function() {
          Entry.engine.toggleRun();
-         console.log(value);
      }, wait);
 })
 
