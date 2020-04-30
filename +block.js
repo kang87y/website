@@ -342,16 +342,8 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 addBlock('stop_project', '작품 정지시키기     ', {
 }, {
-    params: [
-        {
-            type: 'Block',
-            accept: 'string'
-        },
-        {
-            type: 'Indicator',
-            size: 11,
-        }
-    ],
+    params: [],
+    def: [],
     _class: 'stop_projects'
 }, 'text', (sprite, script) => {
      Entry.engine.toggleStop();
@@ -409,6 +401,25 @@ addBlock('stop_project3', '대형화면으로 만들기     ', {
     _class: 'stop_projects'
 }, 'text', (sprite, script) => {
      Entry.engine.toggleFullScreen();
+})
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('stop_project3', '페이지 새로고침하기     ', {
+}, {
+    params: [
+        {
+            type: 'Block',
+            accept: 'string'
+        },
+        {
+            type: 'Indicator',
+            size: 11,
+        }
+    ],
+    _class: 'stop_projects'
+}, 'text', (sprite, script) => {
+     location.reload();
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
