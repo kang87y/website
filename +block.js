@@ -321,8 +321,8 @@ const updateCategory = (category, options) => {
 }
 const addBlock = (blockname, template, color, params, _class, func, skeleton = 'basic') => {
     Entry.block[blockname] = {
-        color: '#4c0099',
-        outerLine: '#330066',
+        color: '#FF99CC',
+        outerLine: '#FF66B2',
         skeleton: skeleton,
         statement: [],
         params: params.params,
@@ -332,7 +332,7 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
             type: blockname
         },
         paramsKeyMap: params.map,
-        class: _class,
+        class: _class ? _class : 'default',
         func: func,
         template: template,
     }
@@ -548,16 +548,14 @@ updateCategory('API')
 $('head').append(`
 <style>
 #entryCategoryAPI {
-    background-image: url(https://media.discordapp.net/attachments/629297490214256650/702376411670773760/26d58a757b92fe4b.png);
     background-repeat: no-repeat;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     margin-bottom: 1px;
 }
 .entrySelectedCategory#entryCategoryAPI {
-    background-image: url(https://media.discordapp.net/attachments/629297490214256650/702377451271094292/2.png);
-    background-color: #4c0099;
-    border-color: #330066;
+    background-color: #FF99CC;
+    border-color: #FF66B2;
     color: #fff;
 }
 </style>
