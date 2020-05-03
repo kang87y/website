@@ -321,8 +321,8 @@ const updateCategory = (category, options) => {
 }
 const addBlock = (blockname, template, color, params, _class, func, skeleton = 'basic') => {
     Entry.block[blockname] = {
-        color: '#B0C4DE',
-        outerLine: '#778899',
+        color: color.color,
+        outerLine: color.outerline,
         skeleton: skeleton,
         statement: [],
         params: params.params,
@@ -341,31 +341,29 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('stop_project', '작품 %1시키기     ', {
+    color: EntryStatic.colorSet.block.default.START,
+    outerLine: EntryStatic.colorSet.block.darken.START
 }, {
     params: [{
             type: "Dropdown",
             options: [
-                ['정지', '1'],
-                ['일시정지', '2']
+                ['정지', '0'],
+                ['일시정지', '1']
             ],
             fontSize: 11,
-        },{
-            type: 'Indicator'
-        }
+            value: '정지'
+        },
     ],
     def: [
-        {
-            type: "default_dropdown_block",
-            params: [`1`]
-        }
+            null
     ],
     class: 'stop_projects',
     map: {
         VALUE: 0
     },
 }, 'text', (sprite, script) => {
-     const value = script.getNumberField("VALUE", script);
-     if (value == '1') {
+     const value = script.getField("VALUE", script);
+     if (value == '0') {
          Entry.engine.toggleStop();
      } else {
          Entry.engine.togglePause();
@@ -375,6 +373,8 @@ addBlock('stop_project', '작품 %1시키기     ', {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
+    color: EntryStatic.colorSet.block.default.START,
+    outerLine: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
@@ -390,7 +390,7 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
     def: [
         {
             type: 'number',
-            params: [`1`],
+            params: [`2`],
         },
     ],
     class: 'stop_projects',
@@ -411,6 +411,8 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('stop_project3', '대형화면으로 만들기     ', {
+    color: EntryStatic.colorSet.block.default.START,
+    outerLine: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
@@ -430,6 +432,8 @@ addBlock('stop_project3', '대형화면으로 만들기     ', {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('stop_project3', '페이지 새로고침하기     ', {
+    color: EntryStatic.colorSet.block.default.START,
+    outerLine: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
@@ -448,26 +452,70 @@ addBlock('stop_project3', '페이지 새로고침하기     ', {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('blank1', ' ', {
+addBlock('didScroll', '스크롤을 하였는가?  ', {
 }, {
-    color: EntryStatic.colorSet.common.TEXT,
     params: [
-           {
-                type: 'Text',
-                text: ' ',
-                color: EntryStatic.colorSet.common.TEXT,
-                align: 'center'
-            }
     ],
     def: [],
     map: {},
-    class: 'text'
+    class: 'scroll'
 }, 'text', (sprite, script) => {
-},);
-        
+    var didScroll;
+    $(window).scroll(function(event){
+        didScroll = true;
+    });
+    setInterval(function() {
+        if (didScroll) {
+            hasScrolled();
+            didScroll = false;
+        }
+    }, 250);
+    function hasScrolled() { 
+        return true;
+    }
+}, 'basic_boolean_field')
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('scrollHandle', '스크롤 방향', {
+}, {
+    params: [],
+    def: [],
+    map: {},
+    class: 'day'
+}, 'text', (sprite, script) => {
+    if (window.addEventListener)
+    window.addEventListener('DOMMouseScroll', wheel, false);
+    window.onmousewheel = document.onmousewheel = wheel;
+
+    function handle(delta) {
+        var s = delta + ": ";
+        if (delta < 0) {
+            return('아래');
+        }
+        else {
+            return('위');
+        }
+    }
+
+
+    function wheel(event){
+        var delta = 0;
+        if (!event) event = window.event;
+        if (event.wheelDelta) {
+            delta = event.wheelDelta/120;
+            if (window.opera) delta = -delta;
+        } else if (event.detail) delta = -event.detail/3;
+        if (delta) handle(delta);
+    }
+
+}, 'basic_string_field');
+
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('day', '오늘 요일', {
+    color: EntryStatic.colorSet.block.default.CALC,
+    outerline: EntryStatic.colorSet.block.darken.CALC,
 }, {
     params: [],
     def: [],
@@ -483,6 +531,8 @@ addBlock('day', '오늘 요일', {
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('boost_mode', '부스트모드가 켜져있는가?  ', {
+    color: '#6E5AE5',
+    outerline: '#6666CC',
 }, {
     params: [
     ],
@@ -500,6 +550,8 @@ addBlock('boost_mode', '부스트모드가 켜져있는가?  ', {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('alert', '%1제목의 alert(경고창) 띄우기     ', {
+    color: '#B0C4DE',
+    outerline: '#778899',
 }, {
     params: [
         {
@@ -529,6 +581,8 @@ addBlock('alert', '%1제목의 alert(경고창) 띄우기     ', {
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('box', '%1제목의 %2 띄우기   ', {
+    color: '#B0C4DE',
+    outerline: '#778899',
 }, {
     params: [
         {
@@ -578,10 +632,10 @@ Entry.staticBlocks.push({
         'stop_project',
         'stop_project2',
         'stop_project3',
-        'boost_mode',
-        'day',
         'alert',
-        'box'
+        'box',
+        'boost_mode',
+        'day'
     ]
 });
 
@@ -597,7 +651,7 @@ $('head').append(`
     margin-bottom: 1px;
 }
 .entrySelectedCategory#entryCategoryAPI {
-    background-color: #B0C4DE;
+    background-color: #000000;
     border-color: #778899;
     color: #fff;
 }
