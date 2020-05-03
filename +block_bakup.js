@@ -321,8 +321,8 @@ const updateCategory = (category, options) => {
 }
 const addBlock = (blockname, template, color, params, _class, func, skeleton = 'basic') => {
     Entry.block[blockname] = {
-        color: '#C0C0C0',
-        outerLine: '#808080',
+        color: '#B0C4DE',
+        outerLine: '#778899',
         skeleton: skeleton,
         statement: [],
         params: params.params,
@@ -332,7 +332,7 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
             type: blockname
         },
         paramsKeyMap: params.map,
-        class: _class,
+        class: _class ? _class : 'default',
         func: func,
         template: template,
     }
@@ -340,21 +340,36 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project', '작품 정지시키기     ', {
+addBlock('stop_project', '작품 %1시키기     ', {
 }, {
-    params: [
-        {
-            type: 'Block',
-            accept: 'string'
-        },
-        {
-            type: 'Indicator',
-            size: 11,
+    params: [{
+            type: "Dropdown",
+            options: [
+                ['정지', '1'],
+                ['일시정지', '2']
+            ],
+            fontSize: 11,
+        },{
+            type: 'Indicator'
         }
     ],
-    _class: 'stop_projects'
+    def: [
+        {
+            type: "default_dropdown_block",
+            params: [`1`]
+        }
+    ],
+    class: 'stop_projects',
+    map: {
+        VALUE: 0
+    },
 }, 'text', (sprite, script) => {
-     Entry.engine.toggleStop();
+     const value = script.getNumberField("VALUE", script);
+     if (value == '1') {
+         Entry.engine.toggleStop();
+     } else {
+         Entry.engine.togglePause();
+     }
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -368,16 +383,17 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
         },
         {
             type: 'Indicator',
+            color: '#F0F8FF',
             size: 11,
         }
     ],
     def: [
         {
-            type: "number",
-            params: [`1`]
+            type: 'number',
+            params: [`1`],
         },
     ],
-    _class: 'stop_projects',
+    class: 'stop_projects',
     map: {
          VALUE: 0,
     },
@@ -406,11 +422,49 @@ addBlock('stop_project3', '대형화면으로 만들기     ', {
             size: 11,
         }
     ],
-    _class: 'stop_projects'
+    class: 'stop_projects'
 }, 'text', (sprite, script) => {
-     Entry.engine.toggleFullScreen();
+    Entry.engine.toggleFullScreen();
 })
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('stop_project3', '페이지 새로고침하기     ', {
+}, {
+    params: [
+        {
+            type: 'Block',
+            accept: 'string'
+        },
+        {
+            type: 'Indicator',
+            size: 11,
+        }
+    ],
+    class: 'stop_projects'
+}, 'text', (sprite, script) => {
+    location.reload();
+})
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('blank1', ' ', {
+}, {
+    color: EntryStatic.colorSet.common.TEXT,
+    params: [
+           {
+                type: 'Text',
+                text: ' ',
+                color: EntryStatic.colorSet.common.TEXT,
+                align: 'center'
+            }
+    ],
+    def: [],
+    map: {},
+    class: 'text'
+}, 'text', (sprite, script) => {
+},);
+        
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('day', '오늘 요일', {
@@ -418,12 +472,12 @@ addBlock('day', '오늘 요일', {
     params: [],
     def: [],
     map: {},
-    _class: 'day'
+    class: 'day'
 }, 'text', (sprite, script) => {
-     let week = new Array('일', '월', '화', '수', '목', '금', '토');
-     let today = new Date();
-     let dayName = week[today.getDay()];
-     return dayName;
+    let week = new Array('일', '월', '화', '수', '목', '금', '토');
+    let today = new Date();
+    let dayName = week[today.getDay()];
+    return dayName;
 }, 'basic_string_field');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -434,7 +488,7 @@ addBlock('boost_mode', '부스트모드가 켜져있는가?  ', {
     ],
     def: [],
     map: {},
-    _class: 'boost_mode_check'
+    class: 'boost_mode_check'
 }, 'text', (sprite, script) => {
     if (useWebGL == true) {
         return true;
@@ -463,7 +517,7 @@ addBlock('alert', '%1제목의 alert(경고창) 띄우기     ', {
             params: [`엔트리`]
         },
     ],
-    _class: 'box_',
+    class: 'box_',
     map: {
         VALUE: 0
     },
@@ -498,7 +552,7 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
                 },
                 null
     ],
-    _class: 'box_',
+    class: 'box_',
     map: {
          LEFTHAND: 0,
          RIGHTHAND: 1
@@ -537,19 +591,17 @@ updateCategory('API')
 $('head').append(`
 <style>
 #entryCategoryAPI {
-    background-image: url(https://media.discordapp.net/attachments/629297490214256650/702376411670773760/26d58a757b92fe4b.png);
     background-repeat: no-repeat;
     border-bottom-right-radius: 6px;
     border-bottom-left-radius: 6px;
     margin-bottom: 1px;
 }
 .entrySelectedCategory#entryCategoryAPI {
-    background-image: url(https://media.discordapp.net/attachments/629297490214256650/702377451271094292/2.png);
-    background-color: #4c0099;
-    border-color: #330066;
+    background-color: #B0C4DE;
+    border-color: #778899;
     color: #fff;
 }
 </style>
 `)
 
-$('#entryCategoryAPI').append('블럭')
+$('#entryCategoryAPI').append('특수')
