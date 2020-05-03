@@ -340,13 +340,36 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project', '작품 정지시키기     ', {
+addBlock('stop_project', '작품 %1시키기     ', {
 }, {
-    params: [],
-    def: [],
-    class: 'stop_projects'
+    params: [{
+            type: "Dropdown",
+            options: [
+                ['정지', '1'],
+                ['일시정지', '2']
+            ],
+            fontSize: 11,
+        },{
+            type: 'Indicator'
+        }
+    ],
+    def: [
+        {
+            type: "default_dropdown_block",
+            params: [`1`]
+        }
+    ],
+    class: 'stop_projects',
+    map: {
+        VALUE: 0
+    },
 }, 'text', (sprite, script) => {
-     Entry.engine.toggleStop();
+     const value = script.getNumberField("VALUE", script);
+     if (value == '1') {
+         Entry.engine.toggleStop();
+     } else {
+         Entry.engine.togglePause();
+     }
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -366,7 +389,7 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
     ],
     def: [
         {
-            type: "number",
+            type: 'number',
             params: [`1`],
         },
     ],
@@ -401,7 +424,7 @@ addBlock('stop_project3', '대형화면으로 만들기     ', {
     ],
     class: 'stop_projects'
 }, 'text', (sprite, script) => {
-     Entry.engine.toggleFullScreen();
+    Entry.engine.toggleFullScreen();
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -420,7 +443,7 @@ addBlock('stop_project3', '페이지 새로고침하기     ', {
     ],
     class: 'stop_projects'
 }, 'text', (sprite, script) => {
-     location.reload();
+    location.reload();
 })
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -451,10 +474,10 @@ addBlock('day', '오늘 요일', {
     map: {},
     class: 'day'
 }, 'text', (sprite, script) => {
-     let week = new Array('일', '월', '화', '수', '목', '금', '토');
-     let today = new Date();
-     let dayName = week[today.getDay()];
-     return dayName;
+    let week = new Array('일', '월', '화', '수', '목', '금', '토');
+    let today = new Date();
+    let dayName = week[today.getDay()];
+    return dayName;
 }, 'basic_string_field');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
