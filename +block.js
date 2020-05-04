@@ -338,9 +338,33 @@ const addBlock = (blockname, template, color, params, _class, func, skeleton = '
     }
 }
 
-//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+console.log('//Thank you for thoratica');
+console.log('//Made by kang87y(encube)');
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project', '작품 %1시키기     ', {
+addBlock('when_stop_button_click', '정지하기 버튼을 클릭했을 때     ', {
+    color: EntryStatic.colorSet.block.default.START,
+    outerLine: EntryStatic.colorSet.block.darken.START
+}, {
+    params: [
+        {
+            type: 'Block',
+            accept: 'string'
+        },
+        {
+            type: 'Indicator',
+            img: 'block_icon/start_icon_start.svg',
+            size: 11,
+        }
+    ],
+    class: 'when_stop_button_click'
+}, 'text', (sprite, script) => {
+    Entry.engine.when_stop();
+}, 'basic_event')
+
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('stop_project', '작품 %1시키기%2', {
     color: EntryStatic.colorSet.block.default.START,
     outerLine: EntryStatic.colorSet.block.darken.START
 }, {
@@ -353,11 +377,17 @@ addBlock('stop_project', '작품 %1시키기     ', {
             fontSize: 11,
             value: '정지'
         },
+        {
+            type: 'Indicator',
+            img: 'block_icon/start_icon.svg',
+            size: 11,
+        },
     ],
     def: [
+            null,
             null
     ],
-    class: 'stop_projects',
+    class: 'event',
     map: {
         VALUE: 0
     },
@@ -372,7 +402,7 @@ addBlock('stop_project', '작품 %1시키기     ', {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
+addBlock('stop_project2', '%1초간 작품 일시정지시키기%2', {
     color: EntryStatic.colorSet.block.default.START,
     outerLine: EntryStatic.colorSet.block.darken.START
 }, {
@@ -383,15 +413,16 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
         },
         {
             type: 'Indicator',
-            color: '#F0F8FF',
+            img: 'block_icon/start_icon.svg',
             size: 11,
-        }
+        },
     ],
     def: [
         {
             type: 'number',
             params: [`2`],
         },
+        null
     ],
     class: 'stop_projects',
     map: {
@@ -410,7 +441,7 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기     ', {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project3', '대형화면으로 만들기     ', {
+addBlock('stop_project3', '대형화면으로 만들기%2', {
     color: EntryStatic.colorSet.block.default.START,
     outerLine: EntryStatic.colorSet.block.darken.START
 }, {
@@ -421,9 +452,11 @@ addBlock('stop_project3', '대형화면으로 만들기     ', {
         },
         {
             type: 'Indicator',
+            img: 'block_icon/start_icon.svg',
             size: 11,
-        }
+        },
     ],
+    def: [null],
     class: 'stop_projects'
 }, 'text', (sprite, script) => {
     Entry.engine.toggleFullScreen();
@@ -431,7 +464,7 @@ addBlock('stop_project3', '대형화면으로 만들기     ', {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('stop_project3', '페이지 새로고침하기     ', {
+addBlock('stop_project3', '페이지 새로고침하기%2', {
     color: EntryStatic.colorSet.block.default.START,
     outerLine: EntryStatic.colorSet.block.darken.START
 }, {
@@ -442,9 +475,11 @@ addBlock('stop_project3', '페이지 새로고침하기     ', {
         },
         {
             type: 'Indicator',
+            img: 'block_icon/start_icon.svg',
             size: 11,
-        }
+        },
     ],
+    def: [null],
     class: 'stop_projects'
 }, 'text', (sprite, script) => {
     location.reload();
@@ -549,7 +584,7 @@ addBlock('boost_mode', '부스트모드가 켜져있는가?  ', {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('alert', '%1제목의 alert(경고창) 띄우기     ', {
+addBlock('alert', '%1제목의 alert(경고창) 띄우기%2', {
     color: '#B0C4DE',
     outerline: '#778899',
 }, {
@@ -560,14 +595,16 @@ addBlock('alert', '%1제목의 alert(경고창) 띄우기     ', {
         },
         {
             type: 'Indicator',
+            img: 'block_icon/hardware_icon.svg',
             size: 11,
-        }
+        },
     ],
     def: [
         {
             type: "text",
             params: [`엔트리`]
         },
+        null
     ],
     class: 'box_',
     map: {
@@ -604,7 +641,7 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
                     type: 'text',
                     params: [`엔트리`]
                 },
-                null
+                null,
     ],
     class: 'box_',
     map: {
