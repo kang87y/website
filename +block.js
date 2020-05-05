@@ -364,7 +364,8 @@ addBlock('when_stop_button_click', '%1정지하기 버튼을 클릭했을 때%2'
     def: [null, null],
     class: 'when_stop_button_click'
 }, 'text', (sprite, script) => {
-      Entry.events_.stop.push();
+      Entry.events_.stop.push(function(){
+      });
 }, 'basic_event')
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -671,7 +672,6 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
-        'when_stop_button_click',
         'stop_project',
         'stop_project2',
         'stop_project3',
