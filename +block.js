@@ -342,31 +342,36 @@ console.log('//Thank you for thoratica');
 console.log('//Made by kang87y(encube)');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('when_stop_button_click', '정지하기 버튼을 클릭했을 때     ', {
+addBlock('when_stop_button_click', '%1정지하기 버튼을 클릭했을 때%2', {
     color: EntryStatic.colorSet.block.default.START,
-    outerLine: EntryStatic.colorSet.block.darken.START
+    outerline: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
-            type: 'Block',
-            accept: 'string'
+            type: 'Indicator',
+            img: 'block_icon/start_icon_play.svg',
+            size: 14,
+            position: {
+                  x: 0,
+                  y: -2,
+            },
         },
         {
             type: 'Indicator',
-            img: 'block_icon/start_icon_start.svg',
             size: 11,
         }
     ],
+    def: [null, null],
     class: 'when_stop_button_click'
 }, 'text', (sprite, script) => {
-    Entry.engine.when_stop();
+      Entry.events_.stop.push();
 }, 'basic_event')
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 addBlock('stop_project', '작품 %1시키기%2', {
     color: EntryStatic.colorSet.block.default.START,
-    outerLine: EntryStatic.colorSet.block.darken.START
+    outerline: EntryStatic.colorSet.block.darken.START
 }, {
     params: [{
             type: "Dropdown",
@@ -404,7 +409,7 @@ addBlock('stop_project', '작품 %1시키기%2', {
 
 addBlock('stop_project2', '%1초간 작품 일시정지시키기%2', {
     color: EntryStatic.colorSet.block.default.START,
-    outerLine: EntryStatic.colorSet.block.darken.START
+    outerline: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
@@ -443,7 +448,7 @@ addBlock('stop_project2', '%1초간 작품 일시정지시키기%2', {
 
 addBlock('stop_project3', '대형화면으로 만들기%2', {
     color: EntryStatic.colorSet.block.default.START,
-    outerLine: EntryStatic.colorSet.block.darken.START
+    outerline: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
@@ -466,7 +471,7 @@ addBlock('stop_project3', '대형화면으로 만들기%2', {
 
 addBlock('stop_project3', '페이지 새로고침하기%2', {
     color: EntryStatic.colorSet.block.default.START,
-    outerLine: EntryStatic.colorSet.block.darken.START
+    outerline: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
@@ -666,6 +671,7 @@ addBlock('box', '%1제목의 %2 띄우기   ', {
 
 Entry.staticBlocks.push({
     category: 'API', blocks: [
+        'when_stop_button_click',
         'stop_project',
         'stop_project2',
         'stop_project3',
