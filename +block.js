@@ -505,8 +505,9 @@ addBlock('CharCode', '%1의 %2값', {
         {
             type: "Dropdown",
             options: [
-                ['아스키 코드', '1'],
-                ['앞 또는 뒤의 공백 제거', '2']
+                ['문자→아스키 코드', '1'],
+                ['아스키 코드→문자', '2'],
+                ['앞 또는 뒤의 공백 제거', '3']
             ],
             fontSize: 11,
         }
@@ -526,11 +527,13 @@ addBlock('CharCode', '%1의 %2값', {
     const leftValue = script.getValue("LEFTHAND", script);
     const rightValue = script.getNumberField("RIGHTHAND", script);
     
-    if (value == '1') {
+    if (rightValue == '1') {
         return String.fromCharCode(leftValue);
     } else if (rightValue == '2') {
+        return leftValue.charCodeAt(0);
+    } else {
         return leftValue.trim();
-    }
+    };
 }, 'basic_string_field');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
