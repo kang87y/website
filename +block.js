@@ -493,63 +493,95 @@ addBlock('stop_project3', '페이지 새로고침하기%2', {
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('didScroll', '스크롤을 하였는가?  ', {
+addBlock('CharCode', '%1의 %2값', {
+    color: EntryStatic.colorSet.block.default.CALC,
+    outerline: EntryStatic.colorSet.block.darken.CALC
 }, {
     params: [
-    ],
-    def: [],
-    map: {},
-    class: 'scroll'
-}, 'text', (sprite, script) => {
-    var didScroll;
-    $(window).scroll(function(event){
-        didScroll = true;
-    });
-    setInterval(function() {
-        if (didScroll) {
-            hasScrolled();
-            didScroll = false;
+        {
+            type: "Block",
+            accept: "string"
+        },
+        {
+            type: "Dropdown",
+            options: [
+                ['아스키 코드', '1'],
+                ['앞 또는 뒤의 공백 제거', '2']
+            ],
+            fontSize: 11,
         }
-    }, 250);
-    function hasScrolled() { 
-        return true;
+    ],
+    def: [
+        {
+            params: ['65']
+        },
+        '1'
+    ],
+    map: {
+        LEFTHAND: 0,
+        RIGHTHAND: 1
+    },
+    class: 'data'
+}, 'text', (sprite, script) => {
+    const leftValue = script.getValue("LEFTHAND", script);
+    const rightValue = script.getNumberField("RIGHTHAND", script);
+    
+    if (value == '1') {
+        return String.fromCharCode(leftValue);
+    } else if (rightValue == '2') {
+        return leftValue.trim();
     }
-}, 'basic_boolean_field')
+}, 'basic_string_field');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('scrollHandle', '스크롤 방향', {
+addBlock('computer', '컴퓨터의 %1', {
+    color: EntryStatic.colorSet.block.default.CALC,
+    outerline: EntryStatic.colorSet.block.darken.CALC
 }, {
-    params: [],
-    def: [],
-    map: {},
-    class: 'day'
+    params: [
+        {
+            type: "Dropdown",
+            options: [
+                ['코드명(b)', '1'],
+                ['버전 정보(b)', '2'],
+                ['사용 언어(b)', '3'],
+                ['엔진 이름(b)', '4'],
+                ['운영 체제(c)', '5'],
+                ['종합 정보(bc)', '6'],
+                ['온라인 상태(i)', '7'],
+                ['방문 기록 개수(b)', '8']
+            ],
+            fontSize: 11,
+        }
+    ],
+    def: [
+         '1'
+    ],
+    map: {
+        VALUE: 0
+    },
+    class: 'data'
 }, 'text', (sprite, script) => {
-    if (window.addEventListener)
-    window.addEventListener('DOMMouseScroll', wheel, false);
-    window.onmousewheel = document.onmousewheel = wheel;
-
-    function handle(delta) {
-        var s = delta + ": ";
-        if (delta < 0) {
-            return('아래');
-        }
-        else {
-            return('위');
-        }
+    const value = script.getNumberValue('VALUE', script);
+    
+    if (value == '1') {
+        return navigator.appCodeName;
+    } else if (value == '2') {
+        return navigator.appVersion;
+    } else if (value == '3') {
+        return navigator.language;
+    } else if (value == '4') {
+        return navigator.product;
+    } else if (value == '5') {
+        return navigator.platform;
+    } else if (value == '6') {
+        return navigator.userAgent;
+    } else if (value == '7') {
+        return navigator.onLine;
+    } else {
+        return history.length;
     }
-
-
-    function wheel(event){
-        var delta = 0;
-        if (!event) event = window.event;
-        if (event.wheelDelta) {
-            delta = event.wheelDelta/120;
-            if (window.opera) delta = -delta;
-        } else if (event.detail) delta = -event.detail/3;
-        if (delta) handle(delta);
-    }
-
 }, 'basic_string_field');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -582,6 +614,38 @@ addBlock('boost_mode', '부스트모드가 켜져있는가?  ', {
     class: 'boost_mode_check'
 }, 'text', (sprite, script) => {
     if (useWebGL == true) {
+        return true;
+    } else {
+        return false;
+    }
+}, 'basic_boolean_field')
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+addBlock('check_text', '%1에 문자가 포함되어 있는가?  ', {
+    color: EntryStatic.colorSet.block.default.JUDGE,
+    outerline: EntryStatic.colorSet.block.darken.JUDGE,
+}, {
+    params: [
+        {
+            type: "Block",
+            accept: "string"
+        }
+    ],
+    def: [
+        {
+            type: 'text',
+            params: [`엔트리`]
+        },
+    ],
+    map: {
+        VALUE: 0
+    },
+    class: 'check_text'
+}, 'text', (sprite, script) => {
+    const value = script.getNumberValue('VALUE', script);
+    
+    if (isNaN(value) == true) {
         return true;
     } else {
         return false;
@@ -678,7 +742,10 @@ Entry.staticBlocks.push({
         'alert',
         'box',
         'boost_mode',
-        'day'
+        'check_text',
+        'day',
+        'CharCode',
+        'computer'
     ]
 });
 
