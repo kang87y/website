@@ -342,14 +342,14 @@ console.log('//Thank you for thoratica');
 console.log('//Made by kang87y(encube)');
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
-addBlock('when_stop_button_click', '%1정지하기 버튼을 클릭했을 때%2', {
+addBlock('when_ue_keyboard', '%1키보드를 사용했을 때', {
     color: EntryStatic.colorSet.block.default.START,
     outerline: EntryStatic.colorSet.block.darken.START
 }, {
     params: [
         {
             type: 'Indicator',
-            img: 'block_icon/start_icon_play.svg',
+            img: 'block_icon/start_icon_keyboard.svg',
             size: 14,
             position: {
                   x: 0,
@@ -361,11 +361,13 @@ addBlock('when_stop_button_click', '%1정지하기 버튼을 클릭했을 때%2'
             size: 11,
         }
     ],
-    def: [null, null],
-    class: 'when_stop_button_click'
+    def: [
+        null
+    ],
+    class: 'when_use_keyboard'
 }, 'text', (sprite, script) => {
-      Entry.events_.stop.push(function(){
-      });
+      onkeydown = function(){
+      };
 }, 'basic_event')
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -507,7 +509,10 @@ addBlock('CharCode', '%1의 %2값', {
             options: [
                 ['문자→아스키 코드', '1'],
                 ['아스키 코드→문자', '2'],
-                ['앞 또는 뒤의 공백 제거', '3']
+                ['앞 또는 뒤의 공백 제거', '3'],
+                ['초성', '4'],
+                ['중성', '5'],
+                ['종성', '6'],
             ],
             fontSize: 11,
         }
@@ -526,14 +531,27 @@ addBlock('CharCode', '%1의 %2값', {
 }, 'text', (sprite, script) => {
     const leftValue = script.getValue("LEFTHAND", script);
     const rightValue = script.getNumberField("RIGHTHAND", script);
+    var a = String(leftValue);
     
     if (rightValue == '1') {
         return String.fromCharCode(leftValue);
     } else if (rightValue == '2') {
         return leftValue.charCodeAt(0);
-    } else {
+    } else if (rightValue == '3'){
         return leftValue.trim();
-    };
+    } else if (rightValue == '4'){
+        var b = ((a.charCodeAt(0) - parseInt('0xac00',16)) /28) / 21;
+	    var c = String.fromCharCode(b + parseInt('0x1100',16));
+        return c;
+    } else if (rightValue == '5'){
+        var b = ((a.charCodeAt(0)- parseInt('0xac00',16)) / 28) % 21;
+	    var c = String.fromCharCode(b + parseInt('0x1161',16));
+        return c;
+    } else if (rightValue == '6'){
+        var b = (a.charCodeAt(0) - parseInt('0xac00',16)) % 28;
+	    var c = String.fromCharCode(b + parseInt('0x11A8') -1);
+        return c;
+    }
 }, 'basic_string_field');
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
