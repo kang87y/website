@@ -319,6 +319,16 @@ const updateCategory = (category, options) => {
         }
     }
 }
+
+// var link = document.location.href;
+//if (link === 'https://playentry.org/ws#!/') {
+//	var color_set = confirm('블럭 색상을 지정해주세요\n[basic:기본, START:카테고리 색상, #??????:지정 색상]', 'basic');
+//        if  (color_set.toUpperCase === 'BASIC') {
+//		
+//	}
+//} else {
+//}
+	
 const addBlock = (blockname, template, color, params, _class, func, skeleton = 'basic') => {
     Entry.block[blockname] = {
         color: color.color,
