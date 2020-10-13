@@ -685,6 +685,44 @@ addBlock('check_text', '%1에 문자가 포함되어 있는가?  ', {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
+
+addBlock('filtering', '%1에 %2가 포함되어있는가?', {
+    color: EntryStatic.colorSet.block.default.JUDGE,
+    outerline: EntryStatic.colorSet.block.darken.JUDGE,
+}, {
+    params: [
+        {
+            type: "Block",
+            accept: "string"
+        },
+	{
+            type: "Block",
+            accept: "string"
+        }
+    ],
+    def: [
+        {
+            type: 'text',
+            params: [`엔트리`]
+        },
+    ],
+    map: {
+        VALUE: 0
+    },
+    class: 'filtering'
+}, 'text', (sprite, script) => {
+    const leftValue = script.getValue("LEFTHAND", script);
+    const rightValue = script.getValue("RIGHTHAND", script)
+    
+    if (String(leftValue).replace(/[0-9]/g, '').includes(String(rightValue))) {
+        return true;
+    } else {
+        return false;
+    }
+}, 'basic_boolean_field')
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
 addBlock('alert', '%1제목의 alert(경고창) 띄우기%2', {
     color: '#B0C4DE',
     outerline: '#778899',
@@ -774,6 +812,7 @@ Entry.staticBlocks.push({
         'box',
         'boost_mode',
         'check_text',
+	'filtering',
         'day',
         'CharCode',
         'computer'
