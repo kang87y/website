@@ -828,15 +828,15 @@ addBlock('setColorByRGB', '붓의 색 정하기 (RGB : %1, %2, %3)%4', {
     def: [
                 {
                     type: 'text',
+                    params: [`255`]
+                },
+                {
+                    type: 'text',
                     params: [`0`]
                 },
                 {
                     type: 'text',
-                    params: [`100`]
-                },
-                {
-                    type: 'text',
-                    params: [`100`]
+                    params: [`0`]
                 }
     ],
     class: 'setColorByRGB',
