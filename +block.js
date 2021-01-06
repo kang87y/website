@@ -882,7 +882,6 @@ Entry.staticBlocks.push({
         'box',
         'boost_mode',
         'check_text',
-	'filtering',
         'day',
         'CharCode',
         'computer'
